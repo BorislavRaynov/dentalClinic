@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    <section id="index-headline">
+        {% if request.user.is_authenticated %}
+            <div class="index-message">
+                <h2>Welcome</h2>
+                <h3>{{ request.user.profile.last_name }}</h3>
+                <h4>Keep it busy</h4>
+            </div>
+        {% else %}
+            <div class="index-message">
+                <h2>Money is not the most important thing</h2>
+                <h3>but without money there is no health</h3>
+                <h4>Join us now!</h4>
+            </div>
+        {% endif %}
+    </section>
+
+{% endblock %}

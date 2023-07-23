@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    {% if not registered_treatments %}
+        <p class="no-content">There are NO registered treatments</p>
+        <p class="no-content">Ask your administrator to add them!!!</p>
+    {% else %}
+
+    <section id="create-page" class="auth">
+        <form id="create" method="post" action="{% url 'patient-treatment' patient.pk %}">
+            <div class="container">
+                <h1 class="form-create-headline">Add Treatments</h1>
+
+                {% csrf_token %}
+                {{ form }}
+
+                <input class="btn" type="submit" value="Add">
+
+            </div>
+        </form>
+    </section>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+  <section id="delete-page" class="auth">
+      <div class="container">
+        <h1>Are you sure you want to delete this booking?</h1>
+        <form id='delete' method="post" action="{% url 'appointment-delete' appointment.pk %}">
+
+            {{ form }}
+            {% csrf_token %}
+
+            <input class="btn submit" type="submit" value="Yes">
+        </form>
+      </div>
+  </section>
+{% endblock %}

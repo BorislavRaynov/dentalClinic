@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <section id="appointment-details">
+        <h1>Appointment Details</h1>
+        <div class="info-section">
+            <div class="appointment-header">
+                <img class="patient-img" src="{% static 'images/patient-default.png' %}" alt='patient-image'/>
+                <h1>{{ object.patient.first_name }} {{ object.patient.last_name }}</h1>
+                <p class="description">Phone Number: {{ object.patient.phone_number }}</p>
+                <p class="description">Booked for: {{ object.date }} at {{ object.time }}</p>
+                <p class="description">Email: {{ object.patient.email }}</p>
+
+                <div class="buttons">
+                    <a href="{% url 'appointment-edit' appointment.pk %}" class="edit-button">Edit</a>
+                    <a href="{% url 'appointment-delete' appointment.pk%}" class="delete-button">Delete</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

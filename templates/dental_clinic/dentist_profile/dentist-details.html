@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <section id="dentist-details">
+        <h1>Your Details</h1>
+        <div class="info-section">
+            <div class="dentist-header">
+                {% if not object.profile_picture %}
+                    <img class="profile-img" src="{% static 'images/dentist-default.png' %}" alt='profile image'/>
+                {% else %}
+                    <img class="profile-img" src="{{ object.profile_picture }}" alt='profile-image'/>
+                {% endif %}
+                <h1>{{ object.first_name }} {{ object.last_name }}</h1>
+
+                {% if object.email %}
+                    <p class="description">Email: {{ object.email }}</p>
+                {% else %}
+                    <p class="description">Email: Would you set email please!!!</p>
+                {% endif %}
+
+                <p class="description">UIN Number: {{ request.user.uin_number }} </p>
+
+                <div class="buttons">
+                    <a href="{% url 'profile-edit' request.user.pk %}" class="edit-button">Edit</a>
+                    <a href="{% url 'profile-delete' request.user.pk %}" class="delete-button">Delete</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
