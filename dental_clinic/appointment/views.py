@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -52,7 +51,3 @@ class AppointmentListView(LoginRequiredMixin, views.ListView):
         queryset = super().get_queryset()
         user = self.request.user
         return queryset.filter(dentist=user)
-
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super().get_context_data(*args, **kwargs)
-    #     context['treatments'] =

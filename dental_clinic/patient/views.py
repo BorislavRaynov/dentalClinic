@@ -40,4 +40,3 @@ class PatientAddTreatment(LoginRequiredMixin, views.UpdateView):
         form = super().get_form(*args, **kwargs)
         form.fields['treatment'].queryset = Treatment.objects.all()
         return form
-
