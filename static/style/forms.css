@@ -151,28 +151,3 @@ select {
 .errorlist{
     color: red
 }
-
-/*label:nth-of-type(2) {*/
-/*    margin-top: 10px;*/
-/*}*/
-
-/*textarea {*/
-/*    width: 100%;*/
-/*    min-width: 20vw;*/
-/*    min-height: 7em;*/
-/*    border: 2px solid #86a480;*/
-/*    border-radius: 0.7em;*/
-/*    font-size: 17px;*/
-/*    border-bottom-color: #ecf0f3;*/
-/*    background-color: #ecf0f3;*/
-/*    border-right-color: #ecf0f3;*/
-/*    margin-top: 7px;*/
-/*    box-shadow: inset 6px 6px 6px #c0c2c5, inset -6px -6px 6px white;*/
-/*}*/
-
-/*textarea>description{*/
-/*    padding: 20px 20px 20px 20px;*/
-/*}*/
-
-
-
