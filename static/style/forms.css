@@ -92,7 +92,7 @@ input[type="time"]{
 
 select {
     background: #6d8d46b5;
-    text-align: center;
+    text-align: left;
     padding: 10px 20px 10px 20px;
     height: 50px;
     margin-top: 10px;

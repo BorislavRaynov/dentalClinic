@@ -17,7 +17,7 @@
                         <h1>{{ appointment.time }}</h1>
                         <h1>Treatments: </h1>
                         {% for t in appointment.patient.treatment.all %}
-                                <h1>{{ t.description }}</h1>
+                                <h1>{{ t.name }}</h1>
                         {% endfor %}
                         <div class="details-buttons">
                             <a href="{% url 'appointment-details' appointment.pk %}" class="details-btn">Details</a>
