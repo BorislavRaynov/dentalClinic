@@ -3,7 +3,7 @@
 #edit-page,
 #delete-page {
     position: relative;
-    width: 550px;
+    width: 500px;
     height: auto;
     background: rgba(0, 0, 0, 0.27);
     text-align: center;
@@ -13,7 +13,7 @@
 }
 
 .container {
-    padding: 40px;
+    padding: 10px;
 }
 
 .container > h1 {
@@ -22,7 +22,7 @@
     text-transform: uppercase;
     margin-top: 10px;
     font-weight: 600;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     text-align: center;
     letter-spacing: 2px;
     font-family: 'Cinzel', serif;
@@ -47,7 +47,7 @@ input,
 select,
 textarea{
     display: block;
-    width: 100%;
+    width: 70%;
     padding: 0;
     border: none;
     outline: none;
@@ -57,7 +57,7 @@ textarea{
 
 label {
     margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 1rem;
     color: white;
     margin-top: 10px;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -72,9 +72,9 @@ input[type="date"],
 input[type="time"]{
     background: #6d8d46b5;
     padding: 20px 20px 20px 20px;
-    height: 50px;
+    height: 20px;
     margin-top: 10px;
-    font-size: 17px;
+    font-size: 1rem;
     border-radius: 50px;
     box-shadow: inset 6px 6px 6px #c0c2c5, inset -6px -6px 6px white;
 }
@@ -83,9 +83,9 @@ input[type="time"]{
     background: #6d8d46b5;
     text-align: center;
     padding: 10px 20px 10px 20px;
-    height: 120px;
+    height: auto;
     margin-top: 10px;
-    font-size: 17px;
+    font-size: 1rem;
     border-radius: 50px;
     box-shadow: inset 6px 6px 6px #c0c2c5, inset -6px -6px 6px white;
 }
@@ -94,11 +94,12 @@ select {
     background: #6d8d46b5;
     text-align: left;
     padding: 10px 20px 10px 20px;
-    height: 50px;
+    height: 40px;
     margin-top: 10px;
-    font-size: 17px;
+    font-size: 1rem;
     border-radius: 50px;
     box-shadow: inset 6px 6px 6px #c0c2c5, inset -6px -6px 6px white;
+    overflow: hidden;
 }
 
 #id_description {
@@ -111,7 +112,7 @@ select {
     border: none;
     margin-top: 30px;
     font-weight: 600;
-    height: 50px;
+    height: 40px;
     text-transform: uppercase;
     letter-spacing: 4px;
     cursive: pointer;
@@ -120,7 +121,7 @@ select {
     transition-property: box-shadow;
     background: #88472ed6;;
     box-shadow: 0 0 25px white;
-    width: 50%;
+    width: 40%;
     cursor: pointer;
 }
 

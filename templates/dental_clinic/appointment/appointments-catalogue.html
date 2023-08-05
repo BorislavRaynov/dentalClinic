@@ -13,12 +13,12 @@
                             <img src="{% static 'images/patient-default.png' %}" alt="Patient picture">
                         </div>
                         <h3>{{ appointment.patient.last_name }}</h3>
-                        <h1>{{ appointment.date }}</h1>
-                        <h1>{{ appointment.time }}</h1>
-                        <h1>Treatments: </h1>
-                        {% for t in appointment.patient.treatment.all %}
-                                <h1>{{ t.name }}</h1>
-                        {% endfor %}
+                        <h1>{{ appointment.date }} at {{ appointment.time }}</h1>
+                        <h1>Treatments:
+                            {% for t in appointment.patient.treatment.all %}
+                                <span>{{ t.name }}</span>
+                            {% endfor %}
+                        </h1>
                         <div class="details-buttons">
                             <a href="{% url 'appointment-details' appointment.pk %}" class="details-btn">Details</a>
                         </div>
