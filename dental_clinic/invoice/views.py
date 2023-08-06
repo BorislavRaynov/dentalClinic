@@ -13,8 +13,6 @@ def get_invoice_number():
     except AttributeError:
         return 1
 
-
-
 def generate_invoice(request,appointment_pk, patient_pk):
     patient = Patient.objects.filter(pk=patient_pk).get()
     appointment = Appointment.objects.filter(pk=appointment_pk).get()

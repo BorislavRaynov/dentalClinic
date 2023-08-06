@@ -24,7 +24,7 @@
             {% else %}
                 <a href="{% url 'login-user' %}">Log In</a>
                 <a href="{% url 'register-user' %}">Register</a>
-                <a href="#">Contacts</a>
+                <a href="{% url 'contact-page' %}">Contacts</a>
                 <a href="{% url 'about' %}">About Us</a>
             {% endif %}
         </nav>

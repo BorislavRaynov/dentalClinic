@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block page_content %}
+    <section id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h1>Contact Us</h1>
+                <p>
+                    Thank you for your interest in our dental clinic! If you have any questions, feedback, or would like
+                    to schedule an appointment, please don't hesitate to get in touch with us. We are here to help you
+                    with all your dental needs.
+                </p>
+                <div class="contact-info">
+                    <div class="contact-details">
+                        <h3>Address</h3>
+                        <p>123 Main Street, Some City, State ZIP</p>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p>(123) 456-7890</p>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>info@example.com</p>
+                    </div>
+                </div>
+                <p>
+                    We are available during our office hours, and our friendly staff will be glad to assist you. Feel
+                    free to reach out to us, and we'll respond to your inquiry as soon as possible.
+                </p>
+                <p>
+                    We value your privacy and will keep your information confidential.
+                </p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

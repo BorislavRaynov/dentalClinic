@@ -4,7 +4,7 @@
     <section id="create-page" class="auth">
         <form id="create" method="post" action="{% url 'invoicing' appointment_pk patient_pk %}">
             <div class="container">
-                <h1 class="form-create-headline">Invoice number: {{ invoice_number }}</h1>
+                <h1 class="form-create-headline">Invoice</h1>
 
                 {% csrf_token %}
                 {{ form }}

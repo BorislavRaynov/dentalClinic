@@ -101,7 +101,8 @@ a {
 
 .index-message h4 {
     color: #547f4b;
-    font-size: 69%;
+    font-size: 1.2rem;
+    margin-top: 10px;
     line-height: 1;
     font-weight: 700;
     letter-spacing: 8px;
@@ -232,4 +233,78 @@ a {
     font-family: "Agency FB", serif;
     color: #88472e;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.about-content {
+    color: white;
+    font-family: "Agency FB", serif;
+    font-size: 2rem;
+}
+
+.about-content h1 {
+    text-align: center;
+    color: #7d442d;
+}
+
+.about-content h4 {
+    color: #547f4b;
+    text-align: center;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 8px;
+    word-spacing: normal;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    font-family: 'Abril Fatface', cursive;
+}
+
+#contact-link {
+    color: #547f4b;
+}
+
+.about-content p {
+    margin-top: 1.2rem;
+}
+
+.contact-content {
+    color: white;
+    font-family: "Agency FB", serif;
+    font-size: 2rem;
+}
+
+.contact-content p{
+    text-align: center;
+    margin-top: 1.2rem;
+}
+
+.contact-content h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #7d442d;
+  margin-bottom: 30px;
+    text-align: center;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.contact-details {
+  text-align: center;
+  color: white;
+  width: 25%;
+}
+
+.contact-details h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: chocolate;
+}
+
+.contact-details p {
+  font-size: 20px;
+  color: chocolate;
+    margin-bottom: 10px;
 }
