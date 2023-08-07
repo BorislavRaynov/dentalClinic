@@ -5,33 +5,33 @@
     {% if not object_list %}
         <p class="no-content">You don't have scheduled patients</p>
     {% else %}
-        {% for appointment in object_list %}
+        <section id="appointments-catalogue">
 
-            <section id="catalogue">
-                    <div class="appointment-card">
-                        <div class="image-wrap">
-                            <img src="{% static 'images/patient-default.png' %}" alt="Patient picture">
-                        </div>
-                        <h3>{{ appointment.patient.last_name }}</h3>
-                        <h1>{{ appointment.date }} at {{ appointment.time }}</h1>
-                        <h1>Treatments:
-                            {% for t in appointment.patient.treatment.all %}
-                                <span>{{ t.name }}</span>
-                            {% endfor %}
-                        </h1>
-                        <div class="details-buttons">
-                            <a href="{% url 'appointment-details' appointment.pk %}" class="details-btn">Details</a>
-                        </div>
-                        <div class="details-buttons">
-                            <a href="{% url 'patient-treatment' appointment.patient.pk %}" class="details-btn add">Add Treatment</a>
-                        </div>
-                        <div class="details-buttons">
-                            <a href="{% url 'invoicing' appointment.pk appointment.patient.pk %}" class="details-btn finish">Finish & Pay</a>
-                        </div>
+            {% for appointment in object_list %}
+                <div class="appointment-card">
+                    <div class="image-wrap">
+                        <img src="{% static 'images/patient-default.png' %}" alt="Patient picture">
                     </div>
-            </section>
+                    <h3>{{ appointment.patient.last_name }}</h3>
+                    <h1>{{ appointment.date }} at {{ appointment.time }}</h1>
+                    <h1>Treatments:
+                        {% for t in appointment.patient.treatment.all %}
+                            <span>{{ t.name }}</span>
+                        {% endfor %}
+                    </h1>
+                    <div class="details-buttons">
+                        <a href="{% url 'appointment-details' appointment.pk %}" class="details-btn">Details</a>
+                    </div>
+                    <div class="details-buttons">
+                        <a href="{% url 'patient-treatment' appointment.patient.pk %}" class="details-btn add">Add Treatment</a>
+                    </div>
+                    <div class="details-buttons">
+                        <a href="{% url 'invoicing' appointment.pk appointment.patient.pk %}" class="details-btn finish">Finish & Pay</a>
+                    </div>
+                </div>
+            {% endfor %}
 
-        {% endfor %}
+        </section>
     {% endif %}
 
 {% endblock %}

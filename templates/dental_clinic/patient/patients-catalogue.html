@@ -5,24 +5,22 @@
     {% if not object_list %}
         <p class="no-content">There are no registered patients</p>
     {% else %}
-        {% for patient in object_list %}
-
-            <section id="catalogue">
-                    <div class="patient-card">
-                        <div class="image-wrap">
-                            <img src="{% static 'images/patient-default.png' %}" alt="Patient picture">
-                        </div>
-                        <h3>{{ patient.first_name }}</h3>
-                        <h3>{{ patient.last_name }}</h3>
-                        <h1>{{ patient.phone_number }}</h1>
-                        <h1>{{ patient.email }}</h1>
-                        <div class="details-buttons">
-                        <a href="{% url 'edit-patient' patient.pk %}" class="edit-button">Edit</a>
-                        </div>
+        <section id="patients-catalogue">
+            {% for patient in object_list %}
+                <div class="patient-card">
+                    <div class="image-wrap">
+                        <img src="{% static 'images/patient-default.png' %}" alt="Patient picture">
                     </div>
-            </section>
-
-        {% endfor %}
+                    <h3>{{ patient.first_name }}</h3>
+                    <h3>{{ patient.last_name }}</h3>
+                    <h1>{{ patient.phone_number }}</h1>
+                    <h1>{{ patient.email }}</h1>
+                    <div class="details-buttons">
+                        <a href="{% url 'edit-patient' patient.pk %}" class="edit-button">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
     {% endif %}
 
 {% endblock %}

@@ -112,7 +112,16 @@ a {
     font-family: 'Abril Fatface', cursive;
 }
 
-#catalogue>h1{
+#appointments-catalogue>h1{
+    text-align: center;
+    color: #134062;
+    text-transform: uppercase;
+    padding: 20px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 15px;
+}
+
+#patients-catalogue>h1{
     text-align: center;
     color: #134062;
     text-transform: uppercase;
