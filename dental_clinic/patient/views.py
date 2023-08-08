@@ -10,6 +10,8 @@ from .forms import AddTreatmentForm
 class PatientListView(LoginRequiredMixin, views.ListView):
     template_name = 'dental_clinic/patient/patients-catalogue.html'
     model = Patient
+    paginate_by = 4
+
 
 class PatientCreateView(LoginRequiredMixin, views.CreateView):
     template_name = 'dental_clinic/patient/create-patient.html'

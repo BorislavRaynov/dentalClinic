@@ -1,13 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel&family=Monoton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Croissant+One&family=Great+Vibes&family=Lato&family=Montserrat:wght@300;400&family=PT+Serif:ital@1&family=Tangerine:wght@700&display=swap');
 
+@media only screen and (max-width: 1000px) {
+    #appointment-details,
+    #dentist-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dentist-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /*gap: 10px;*/
+    }
+}
+
 #appointment-details,
 #dentist-details {
     position: relative;
-    display: block;
-    width: 980px;
-    margin: 40px auto;
-    overflow: hidden;
+    width: 60%;
+    margin: 30px auto;
     border-radius: 10px;
     transition: all 0.4s;
 
@@ -80,7 +96,7 @@
     width: 25%;
     position: relative;
     float: left;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
     margin-right: 55px;
     height: 220px;
     border-radius: 50%;

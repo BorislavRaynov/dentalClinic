@@ -46,6 +46,7 @@ class AppointmentDeleteView(views.DeleteView):
 class AppointmentListView(LoginRequiredMixin, views.ListView):
     model = Appointment
     template_name = 'dental_clinic/appointment/appointments-catalogue.html'
+    paginate_by = 3
 
     def get_queryset(self):
         queryset = super().get_queryset()

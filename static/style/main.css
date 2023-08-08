@@ -8,6 +8,16 @@ html {
     box-sizing: border-box;
 }
 
+#box {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 *,
 *::before,
 *::after {
@@ -316,4 +326,9 @@ a {
   font-size: 20px;
   color: chocolate;
     margin-bottom: 10px;
+}
+
+.pagination {
+    color: white;
+    font-size: 1.4rem;
 }
