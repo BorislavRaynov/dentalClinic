@@ -8,11 +8,6 @@ html {
     box-sizing: border-box;
 }
 
-#box {
-    display: flex;
-    flex-direction: column;
-}
-
 body {
     display: flex;
     flex-direction: column;
@@ -58,14 +53,13 @@ button {
 }
 
 a {
-    margin: 0.2em;
     text-decoration: none;
     font-weight: bold;
     color: inherit;
 }
 
 #index-headline {
-    width: auto;
+    width: 60%;
     justify-content: right;
     padding: 25px 15px 20px;
     position: relative;
@@ -80,13 +74,13 @@ a {
     left: 0;
     top: 40%;
     text-align: center;
-    width: 30%
 }
 
 .index-message h2 {
     color: #ffffff;
     font-size: 220%;
-
+    display: flex;
+    flex-direction: column;
     line-height: 1;
     font-weight: 700;
     letter-spacing: 8px;
@@ -142,6 +136,8 @@ a {
 
 .appointment-card,
 .patient-card {
+    display: flex;
+    flex-direction: column;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -176,14 +172,13 @@ a {
 
 .details-buttons{
     text-align: center;
-    margin-top: 50px;
+    margin-top: 35px;
 }
 .details-btn{
     color: #fff;
     border: none;
-    margin: 20px;
-    padding: 20px 30px;
-    font-size: 1rem;
+    padding: 15px 30px;
+    font-size: 0.8rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -216,7 +211,7 @@ a {
 .appointment-card>h3,
 .patient-card>h3{
     font-family: "Agency FB", serif;
-    font-size: 42px;
+    font-size: 2.5rem;
     font-weight: 700;
     line-height: normal;
     width: 100%;
@@ -231,7 +226,7 @@ a {
 
 .appointment-card>h1,
 .patient-card>h1 {
-    font-size: 15px;
+    font-size: 1rem;
     color: #E2E8EA;
     text-align: center;
 }

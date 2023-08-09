@@ -12,10 +12,6 @@
     border: 3px solid #6e8e4626;
 }
 
-.container {
-    padding: 10px;
-}
-
 .container > h1 {
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     color: #7d442d;
@@ -152,4 +148,31 @@ select {
 
 .errorlist{
     color: red
+}
+
+.patients-search {
+    width: 320px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.patients-search > button {
+    background: #79A148;
+    border-color: #79A148;
+    border-radius: 20px;
+    height: 10%;
+    padding: 8px 24px;
+    font-size: 1.2rem;
+    color: rgb(255, 255, 255);
+    box-shadow: 0 0 25px white;
+    border-radius: 1.4rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.patients-search > input {
+    border-radius: 1.4rem;
+    background: darkgray;
+    padding-left: 1.4rem;
 }

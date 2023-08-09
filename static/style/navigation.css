@@ -4,12 +4,7 @@
 body{
     background: linear-gradient(rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.5)), url('../images/dental-studio4.jpg');
     background-attachment: fixed;
-       background-size: cover;
-}
-
-.auth {
-    width: 100px;
-    margin: 0.5rem auto;
+    background-size: cover;
 }
 
 header,
@@ -23,7 +18,7 @@ footer {
 }
 
 .index-navigation {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-family: 'Cinzel', serif;
 
 
@@ -33,6 +28,10 @@ header {
     position: relative;
     padding: 10px;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex: row;
 }
 
 header h1 {
@@ -48,13 +47,9 @@ h1 span{
 header nav {
     font-size: x-large;
     font-family: 'Cinzel', serif;
-    position: absolute;
-    right: 0;
     bottom: 21px;
-}
-
-header nav>* {
-    float: left;
+    margin-left: auto;
+    margin: 0;
 }
 
 footer {

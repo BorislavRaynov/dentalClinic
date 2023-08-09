@@ -12,6 +12,18 @@ class PatientListView(LoginRequiredMixin, views.ListView):
     model = Patient
     paginate_by = 4
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        search = self.request.GET.get('search', '')
+        queryset = queryset.filter(last_name__icontains=search)
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['search'] = self.request.GET.get('search', '')
+        return context
+
 
 class PatientCreateView(LoginRequiredMixin, views.CreateView):
     template_name = 'dental_clinic/patient/create-patient.html'

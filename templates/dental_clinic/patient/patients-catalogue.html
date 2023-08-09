@@ -5,6 +5,12 @@
     {% if not object_list %}
         <p class="no-content">There are no registered patients</p>
     {% else %}
+
+        <form action="{% url 'patients-catalogue' %}?page={{ page_obj.number }}" class="patients-search">
+            <input name="search" value="{{ search }}" placeholder="SEARCH BY LAST NAME">
+            <button>Search</button>
+        </form>
+
         <section id="patients-catalogue">
             {% for patient in object_list %}
                 <div class="patient-card">
@@ -24,7 +30,7 @@
 
         <section class="pagination">
             {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+                <a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">&lt;</a>
             {% else %}
                 <a>&lt;</a>
             {% endif %}
@@ -32,7 +38,7 @@
             <span class="current-page">{{ page_obj.number }} / {{ paginator.num_pages }}</span>
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+                <a href="?page={{ page_obj.next_page_number }}&search={{ search }}">&gt;</a>
             {% else %}
                 <a>&gt;</a>
             {% endif %}
