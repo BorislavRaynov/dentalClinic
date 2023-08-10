@@ -1,40 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel&family=Monoton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Croissant+One&family=Great+Vibes&family=Lato&family=Montserrat:wght@300;400&family=PT+Serif:ital@1&family=Tangerine:wght@700&display=swap');
 
-@media only screen and (max-width: 1000px) {
-    #appointment-details,
-    #dentist-details {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        min-width: 360px;
-    }
-
-    .dentist-header, .appointment-header {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    header {
-        display: flex;
-        flex-direction: column;
-    }
-
-    nav {
-        display: grid;
-        grid-template-columns: repeat(2, 2fr);
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .buttons {
-        display: flex;
-        flex-direction: column;
-    }
-}
 
 #appointment-details,
 #dentist-details {
@@ -154,4 +120,39 @@
                 0 0 50px white,
                 0 0 25px white,
                 0 0 5px white;
+}
+
+@media only screen and (max-width: 1000px) {
+    #appointment-details,
+    #dentist-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        min-width: 360px;
+    }
+
+    .dentist-header, .appointment-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    nav {
+        display: grid;
+        grid-template-columns: repeat(2, 2fr);
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .buttons {
+        display: flex;
+        flex-direction: column;
+    }
 }
