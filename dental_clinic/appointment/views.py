@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from dental_clinic.appointment.forms import AppointmentCreateForm, AppointmentEditForm
 from dental_clinic.appointment.models import Appointment
 from dental_clinic.patient.models import Patient
+from dental_clinic.treatment.models import Treatment
 
 
 class AppointmentCreateView(views.CreateView):
@@ -15,7 +16,7 @@ class AppointmentCreateView(views.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['registered_patients'] = Patient.objects.all()
+        context['registered_treatments'] = Treatment.objects.all()
         return context
 
     def get_form(self, *args, **kwargs):
