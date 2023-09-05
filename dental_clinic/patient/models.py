@@ -24,10 +24,9 @@ class Patient(models.Model):
 
     treatment = models.ManyToManyField(Treatment, blank=True)
 
-    def  delete(self, *args, **kwargs):
+    def delete(self, *args, **kwargs):
         self.treatment.clear()
         super().delete(*args, **kwargs)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-

@@ -1,6 +1,5 @@
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.views import generic as views
 from .models import DentistUserProfile
 

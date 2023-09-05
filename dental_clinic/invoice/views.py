@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.views import generic as views
 from .models import Invoice
 from .forms import GenerateInvoiceForm
 from dental_clinic.patient.models import Patient
@@ -13,7 +12,8 @@ def get_invoice_number():
     except AttributeError:
         return 1
 
-def generate_invoice(request,appointment_pk, patient_pk):
+
+def generate_invoice(request, appointment_pk, patient_pk):
     patient = Patient.objects.filter(pk=patient_pk).get()
     appointment = Appointment.objects.filter(pk=appointment_pk).get()
     treatments = patient.treatment.all()
