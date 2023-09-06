@@ -12,7 +12,7 @@ class PatientListView(LoginRequiredMixin, views.ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('id')
 
         search = self.request.GET.get('search', '')
         queryset = queryset.filter(last_name__icontains=search)
