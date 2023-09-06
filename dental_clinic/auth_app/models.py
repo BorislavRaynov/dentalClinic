@@ -3,6 +3,7 @@ from django.contrib.auth import models as auth_models
 from django.core.validators import MinLengthValidator
 from .validators import validate_uin_number_contains_only_nums
 from django.contrib.auth.hashers import make_password
+from django.apps import apps
 
 
 class DentalUserManager(auth_models.BaseUserManager):
@@ -30,7 +31,13 @@ class DentalUserManager(auth_models.BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self._create_user(uin_number, password, **extra_fields)
+        super_u = self._create_user(uin_number, password, **extra_fields)
+
+        profile_model = apps.get_model('dentist_profile', 'DentistUserProfile')
+
+        profile_model.objects.create(user=super_u, first_name='SuperFname', last_name='SuperLname')
+
+        return super_u
 
 
 class DentistUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
