@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 from django.urls import reverse_lazy
 
@@ -21,14 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!k)o0yt4@(h9)pcs-ozrrx#z6!=i6%zmv69jw9maoh0cx42*au'
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(' ')
 
-
+CSRF_TRUSTED_ORIGINS = [f"http://{x}" for x in os.environ.get('ALLOWED_HOSTS', '')]
 # Application definition
 
 INSTALLED_APPS = [
@@ -63,8 +63,7 @@ ROOT_URLCONF = 'dental_clinic.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,11 +85,11 @@ WSGI_APPLICATION = 'dental_clinic.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dental-clinic-database",
-        "USER": "main-user",
-        "PASSWORD": "main-pass",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+        "NAME": os.getenv('DB_NAME', None),
+        "USER": os.getenv('DB_USER', None),
+        "PASSWORD": os.getenv('DB_PASSWORD', None),
+        "HOST": os.getenv('DB_HOST', None),
+        "PORT": os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -135,6 +134,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+STATIC_ROOT = os.environ.get('STATIC_ROOT', BASE_DIR / 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

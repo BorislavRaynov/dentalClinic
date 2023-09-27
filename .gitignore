@@ -139,3 +139,5 @@ GitHub.sublime-settings
 Lib
 Scripts
 .idea
+postgresql
+staticfiles

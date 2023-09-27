@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  web:
+    image: dental_deploy
+    build: .
+    command: python manage.py runserver localhost:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./envs/.env
+    volumes:
+      - ./staticfiles:/app/static
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: main-pass
+      POSTGRES_USER: main-user
+      POSTGRES_DB: dental-clinic-database
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
