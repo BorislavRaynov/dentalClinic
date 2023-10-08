@@ -1,7 +1,7 @@
-    #register-page,
-    #create-page,
-    #edit-page,
-    #delete-page {
+#register-page,
+#create-page,
+#edit-page,
+#delete-page {
     position: relative;
     width: 400px;
     height: auto;
@@ -127,7 +127,7 @@ select {
     box-shadow: 0 0 100px white,
                 0 0 50px white,
                 0 0 25px white,
-                0 0 5px white,
+                0 0 5px white;
 }
 
 .container {
