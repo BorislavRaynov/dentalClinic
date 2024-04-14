@@ -143,4 +143,3 @@ postgresql
 staticfiles
 /envs/.env
 docker-compose.yml
-/nginx/
