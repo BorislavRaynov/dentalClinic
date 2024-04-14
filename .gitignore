@@ -97,7 +97,7 @@ celerybeat-schedule.*
 *.sage.py
 
 # Environments
-#.env
+.env
 .venv
 env/
 venv/
@@ -141,6 +141,5 @@ Scripts
 .idea
 postgresql
 staticfiles
-/envs/
+/envs/.env
 docker-compose.yml
-/dental_clinic/settings.py
