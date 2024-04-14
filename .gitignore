@@ -141,3 +141,4 @@ Scripts
 .idea
 postgresql
 staticfiles
+/envs/
