@@ -142,3 +142,5 @@ Scripts
 postgresql
 staticfiles
 /envs/
+docker-compose.yml
+/dental_clinic/settings.py
