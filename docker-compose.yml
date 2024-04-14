@@ -3,17 +3,15 @@ version: '3.8'
 services:
 
   web:
-    image: dental_deploy
-    build: .
-    command: python manage.py runserver localhost:8000
+    image: braynov/dental_deploy
+    command: gunicorn --bind 0.0.0.0:8000 dental_clinic.wsgi:application
     ports:
       - "8000:8000"
     env_file:
-      - ./envs/.env
+      - ${PWD}/envs/.env
     volumes:
-      - ./staticfiles:/app/static
-    depends_on:
-      - postgres
+      - /home/dental_clinic/static:/app/staticfiles
+    platform: linux/amd64
     links:
       - postgres
 
@@ -29,3 +27,19 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+    volumes:
+      - /home/dental_clinic/static:/home/app/web/staticfiles
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    links:
+      - web
