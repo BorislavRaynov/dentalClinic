@@ -142,3 +142,4 @@ Scripts
 postgresql
 staticfiles
 /envs/
+/nginx/
