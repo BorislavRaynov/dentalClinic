@@ -3,39 +3,36 @@ version: '3.8'
 services:
 
   web:
-
-  services:
-
     image: dental_deploy
     build: .
     command: python manage.py runserver localhost:8000
     ports:
       - "8000:8000"
 
-    postgres:
-      image: postgres
-      restart: always
-      ports:
-        - "5432:5432"
-      environment:
-        POSTGRES_PASSWORD: main-pass
-        POSTGRES_USER: main-user
-        POSTGRES_DB: dental-clinic-database
-        PGDATA: /var/lib/postgresql/data/pgdata
-      volumes:
-        - ./postgresql:/var/lib/postgresql/data
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: main-pass
+      POSTGRES_USER: main-user
+      POSTGRES_DB: dental-clinic-database
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
 
-    pgadmin:
-      image: dpage/pgadmin4
-      container_name: pgadmin4
-      restart: always
-      ports:
-        - "5050:80"
-      environment:
-        PGADMIN_DEFAULT_EMAIL: test@email.com
-        PGADMIN_DEFAULT_PASSWORD: testpass
-      volumes:
-        - my-data:/var/lib/pgadmin
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@email.com
+      PGADMIN_DEFAULT_PASSWORD: testpass
+    volumes:
+      - my-data:/var/lib/pgadmin
 
 volumes:
   my-data:
