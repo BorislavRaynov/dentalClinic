@@ -1,20 +1,9 @@
-
-version: '3.8'
-
-services:
-
   web:
-    image: braynov/dental_deploy
-    command: gunicorn --bind 0.0.0.0:8000 dental_clinic.wsgi:application
+    image: dental_deploy
+    build: .
+    command: python manage.py runserver localhost:8000
     ports:
       - "8000:8000"
-    env_file:
-      - ${PWD}/envs/.env
-    volumes:
-      - /home/dental_clinic/static:/app/staticfiles
-    platform: linux/amd64
-    links:
-      - postgres
 
   postgres:
     image: postgres
@@ -29,18 +18,18 @@ services:
     volumes:
       - ./postgresql:/var/lib/postgresql/data
 
-  nginx:
-    image: nginx
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: always
     ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - web
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@email.com
+      PGADMIN_DEFAULT_PASSWORD: testpass
     volumes:
-      - /home/dental_clinic/static:/home/app/web/staticfiles
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/logs:/var/log/nginx
-      - ./certbot/www:/var/www/certbot/:ro
-      - ./certbot/conf/:/etc/nginx/ssl/:ro
-    links:
-      - web
+      - my-data:/var/lib/pgadmin
+
+volumes:
+  my-data:
+    external: true
