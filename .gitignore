@@ -140,3 +140,4 @@ Lib
 Scripts
 .idea
 postgresql
+docker-compose.yml
