@@ -28,7 +28,7 @@ DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(' ')
 
-CSRF_TRUSTED_ORIGINS = [f"http://{x}" for x in os.environ.get('ALLOWED_HOSTS', '')]
+CSRF_TRUSTED_ORIGINS = [f"http://{x}" for x in os.environ.get('ALLOWED_HOSTS', '').split(' ')]
 # Application definition
 
 INSTALLED_APPS = [
