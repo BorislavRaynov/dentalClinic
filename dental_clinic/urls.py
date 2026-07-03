@@ -24,5 +24,6 @@ urlpatterns = [
     path('profile/', include('dental_clinic.dentist_profile.urls')),
     path('appointment/', include('dental_clinic.appointment.urls')),
     path('patient/', include('dental_clinic.patient.urls')),
-    path('invoice/', include('dental_clinic.invoice.urls'))
+    path('invoice/', include('dental_clinic.invoice.urls')),
+    path('treatment/', include('dental_clinic.treatment.urls'))
 ]
