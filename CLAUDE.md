@@ -13,12 +13,12 @@ All application code lives in the `dental_clinic/` package, split into seven Dja
 - `auth_app` — custom authentication. `AUTH_USER_MODEL = 'auth_app.DentistUser'`; users log in with a 10-digit **UIN number** (`USERNAME_FIELD = 'uin_number'`), not a username/email. `DentalUserManager.create_superuser` also auto-creates a `DentistUserProfile`.
 - `dentist_profile` — profile data (names) for the dentist user, linked to `DentistUser`.
 - `patient` — `Patient` model with a `ManyToManyField` to `Treatment`. `Patient.delete()` is overridden to clear treatments first.
-- `treatment` — `Treatment` with a 3-digit `clinical_code`, name, cost, description.
+- `treatment` — `Treatment` with a 3-digit `clinical_code`, name, cost, description, and optional notes; create/edit views under `/treatment/`.
 - `appointment` — `Appointment` = FK to `Patient` + FK to the dentist user + date/time.
 - `invoice` — `Invoice` per patient; `invoice_number` (CharField) is the primary key; `amount` is also a CharField.
 - `common` — home page / shared views.
 
-Cross-app flow to know: creating a patient redirects to appointment creation (`PatientCreateView.success_url = reverse_lazy('appointment-create')`), and adding treatments to a patient redirects back to the appointments catalogue. Root URL wiring is in `dental_clinic/urls.py` (`/authentication/`, `/profile/`, `/appointment/`, `/patient/`, `/invoice/`, `/admin/`).
+Cross-app flow to know: creating a patient redirects to appointment creation (`PatientCreateView.success_url = reverse_lazy('appointment-create')`), and adding treatments to a patient redirects back to the appointments catalogue. Root URL wiring is in `dental_clinic/urls.py` (`/authentication/`, `/profile/`, `/appointment/`, `/patient/`, `/treatment/`, `/invoice/`, `/admin/`).
 
 Configuration is entirely environment-driven (`dental_clinic/settings.py`): `SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS` (space-separated), `DB_NAME`/`DB_USER`/`DB_PASSWORD`/`DB_HOST`/`DB_PORT`, `STATIC_ROOT`. Env files are expected at `envs/.env` (dev, used by `docker-compose.yml`) and `envs/.env.prod` (prod, used by `docker-compose.prod.yml`) — both are git-ignored and not in the repo. Note: when `DEBUG` is truthy, `AUTH_PASSWORD_VALIDATORS` is emptied.
 
@@ -64,7 +64,7 @@ python manage.py test tests.patient.views.test_create_view.PatientCreateViewTest
 
 - Tests live in the top-level `tests/` package, mirrored as `tests/<app>/<models|views>/test_*.py` — **not** in the per-app `tests.py` files (those are empty scaffolding).
 - Style: `django.test.TestCase`, descriptive method names encoding the scenario and expectation (`test_patient_create_view_unauthenticated_redirects`), `reverse()` for URLs, `assertTemplateUsed`/`assertRedirects` for views.
-- Only `appointment`, `auth_app`, and `patient` currently have tests; there is no coverage tooling or enforced threshold. CI does **not** run tests (the step is commented out).
+- Only `appointment`, `auth_app`, `patient`, and `treatment` currently have tests; there is no coverage tooling or enforced threshold. CI does **not** run tests (the step is commented out).
 - Tests need a PostgreSQL database available (settings have no SQLite fallback).
 Always:
 
@@ -106,12 +106,14 @@ Always:
 ## For AI Assistants
 
 Always, before finishing work:
+
 - Run `python manage.py test` (or at minimum the test packages touching your change) if a database is available; if you cannot run them, say so explicitly rather than implying they passed.
 - After any model change, generate the migration (`makemigrations`) and include it in the change.
 - Keep new code consistent with the observed conventions above (CBVs + `LoginRequiredMixin`, kebab-case templates/URL names, validators in `validators.py`, tests under top-level `tests/`).
 - Check `git status` to ensure no env files, venv artifacts, or `postgresql/` data are being committed.
 
 Never:
+
 - Commit or hardcode secrets — settings must keep reading from environment variables; don't invent an `envs/.env` with real-looking credentials.
 - Enable the commented-out CI test/deploy steps, or change the AWS deploy scaffolding, without being asked.
 - Switch the database engine, replace the custom `DentistUser` model, or change `USERNAME_FIELD` — auth and data are built around UIN-based login.
