@@ -16,6 +16,7 @@ class Treatment(models.Model):
     name = models.CharField(max_length=100)
     cost = models.FloatField()
     description = models.TextField()
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.clinical_code}"
