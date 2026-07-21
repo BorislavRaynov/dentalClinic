@@ -1,7 +1,24 @@
 from django.contrib import admin
-from dental_clinic.patient.models import Patient
+from dental_clinic.patient.models import Patient, MedicalCondition, Allergy, MedicalHistoryEntry
+
+
+class MedicalConditionInline(admin.TabularInline):
+    model = MedicalCondition
+    extra = 0
+
+
+class AllergyInline(admin.TabularInline):
+    model = Allergy
+    extra = 0
+
+
+class MedicalHistoryEntryInline(admin.TabularInline):
+    model = MedicalHistoryEntry
+    extra = 0
 
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'phone_number', 'email')
+    list_display = ('first_name', 'last_name', 'phone_number', 'email', 'patient_id', 'date_of_birth')
+    search_fields = ('patient_id', 'first_name', 'last_name', 'email', 'phone_number')
+    inlines = (MedicalConditionInline, AllergyInline, MedicalHistoryEntryInline)

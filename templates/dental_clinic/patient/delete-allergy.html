@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    <section id="delete-page" class="auth">
+        <div class="container">
+            <h1>Are you sure you want to delete the "{{ object.name }}" allergy?</h1>
+            <form id="delete" method="post" action="{% url 'allergy-delete' object.pk %}">
+
+                {{ form }}
+                {% csrf_token %}
+
+                <input class="btn submit" type="submit" value="Yes">
+            </form>
+            <a href="{% url 'patient-medical-record' object.patient.pk %}" class="edit-button">Cancel</a>
+        </div>
+    </section>
+{% endblock %}
