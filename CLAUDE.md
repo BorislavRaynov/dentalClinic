@@ -12,13 +12,13 @@ All application code lives in the `dental_clinic/` package, split into seven Dja
 
 - `auth_app` — custom authentication. `AUTH_USER_MODEL = 'auth_app.DentistUser'`; users log in with a 10-digit **UIN number** (`USERNAME_FIELD = 'uin_number'`), not a username/email. `DentalUserManager.create_superuser` also auto-creates a `DentistUserProfile`.
 - `dentist_profile` — profile data (names) for the dentist user, linked to `DentistUser`.
-- `patient` — `Patient` model with a `ManyToManyField` to `Treatment`. `Patient.delete()` is overridden to clear treatments first.
+- `patient` — `Patient` model with auto-generated `patient_id` (format `PT-XXXXXXXX`, unique, non-editable), `address`, `date_of_birth`, and `sex` (choices M/F/O). `ManyToManyField` to `Treatment`; `Patient.delete()` clears treatments first. Owns three related clinical models via FK + CASCADE: `MedicalCondition` (related_name `medical_conditions`, status/notes), `Allergy` (related_name `allergies`, severity/reaction), and `MedicalHistoryEntry` (related_name `medical_history_entries`, timestamped notes). `PatientMedicalRecordView` (DetailView) serves as a medical-record hub with scoped Create/Update/Delete views per clinical model. Patient catalogue search (via `PatientListView`) matches across name, patient_id, email, and phone (demographic fields only; clinical fields excluded from search).
 - `treatment` — `Treatment` with a 3-digit `clinical_code`, name, cost, description, and optional notes; create/edit views under `/treatment/`.
 - `appointment` — `Appointment` = FK to `Patient` + FK to the dentist user + date/time.
 - `invoice` — `Invoice` per patient; `invoice_number` (CharField) is the primary key; `amount` is also a CharField.
 - `common` — home page / shared views.
 
-Cross-app flow to know: creating a patient redirects to appointment creation (`PatientCreateView.success_url = reverse_lazy('appointment-create')`), and adding treatments to a patient redirects back to the appointments catalogue. Root URL wiring is in `dental_clinic/urls.py` (`/authentication/`, `/profile/`, `/appointment/`, `/patient/`, `/treatment/`, `/invoice/`, `/admin/`).
+Cross-app flow to know: creating a patient redirects to appointment creation (`PatientCreateView.success_url = reverse_lazy('appointment-create')`), and adding treatments to a patient redirects back to the appointments catalogue. Root URL wiring is in `dental_clinic/urls.py` (`/authentication/`, `/profile/`, `/appointment/`, `/patient/`, `/treatment/`, `/invoice/`, `/admin/`). Patient app URL names (kebab-case, under `/patient/`): `patients-catalogue`, `create-patient`, `edit-patient`, `patient-treatment`, `patient-medical-record`, and scoped clinical CRUD: `condition-add|edit|delete`, `allergy-add|edit|delete`, `history-add|edit|delete`.
 
 Configuration is entirely environment-driven (`dental_clinic/settings.py`): `SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS` (space-separated), `DB_NAME`/`DB_USER`/`DB_PASSWORD`/`DB_HOST`/`DB_PORT`, `STATIC_ROOT`. Env files are expected at `envs/.env` (dev, used by `docker-compose.yml`) and `envs/.env.prod` (prod, used by `docker-compose.prod.yml`) — both are git-ignored and not in the repo. Note: when `DEBUG` is truthy, `AUTH_PASSWORD_VALIDATORS` is emptied.
 
@@ -55,10 +55,11 @@ python manage.py test tests.patient.views.test_create_view.PatientCreateViewTest
 - Use meaningful names
 - Views are **class-based generic views** (`django.views.generic`, imported as `views`) guarded with `LoginRequiredMixin`. Follow this pattern; no function-based views are used.
 - Templates live in the top-level `templates/dental_clinic/<app>/` directory with **kebab-case** filenames (`create-patient.html`); URL names are also kebab-case (`create-patient`, `appointment-create`, `patients-catalogue`).
-- Field validators live in a per-app `validators.py`, named `validate_<what>` (e.g. `validate_phone_number_only_nums`).
+- Field validators live in a per-app `validators.py`, named `validate_<what>` (e.g. `validate_phone_number_only_nums`, `validate_date_not_in_future`). Validators fire via `ModelForm.full_clean()`, not on plain `.objects.create()`.
 - Model constants are UPPER_CASE class attributes (e.g. `UIN_NUMBER_MAX_LENGTH = 10`).
 - Imports of sibling apps use the full package path (`from dental_clinic.patient.models import Patient`) or relative imports (`from ..treatment.models import Treatment`).
 - Static assets go in top-level `static/` (`style/`, `images/`).
+- ModelForms (e.g., `PatientForm`) are reused across multiple related views (e.g., `PatientCreateView` and `PatientEditView`).
 
 ## Testing Expectations
 
