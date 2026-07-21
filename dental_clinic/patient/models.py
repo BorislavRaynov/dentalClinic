@@ -1,5 +1,6 @@
 import uuid
 
+from django.conf import settings
 from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.core.validators import MinLengthValidator
@@ -91,6 +92,7 @@ class Patient(models.Model):
 
 class MedicalCondition(models.Model):
     NAME_MAX_LENGTH = 100
+    CODE_MAX_LENGTH = 10
 
     STATUS_ACTIVE = 'active'
     STATUS_RESOLVED = 'resolved'
@@ -103,6 +105,7 @@ class MedicalCondition(models.Model):
         Patient, on_delete=models.CASCADE, related_name='medical_conditions'
     )
     name = models.CharField(max_length=NAME_MAX_LENGTH)
+    code = models.CharField(max_length=CODE_MAX_LENGTH, blank=True)
     status = models.CharField(
         max_length=8, choices=STATUS_CHOICES, default=STATUS_ACTIVE
     )
@@ -160,3 +163,76 @@ class MedicalHistoryEntry(models.Model):
 
     def __str__(self):
         return f"{self.patient} - {self.entry_date}"
+
+
+class ClinicalNote(models.Model):
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name='clinical_notes'
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='clinical_notes'
+    )
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    body = models.TextField()
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        return f"{self.patient} note {self.created_at:%Y-%m-%d}"
+
+
+class Prescription(models.Model):
+    MEDICATION_MAX_LENGTH = 200
+    DOSAGE_MAX_LENGTH = 100
+
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name='prescriptions'
+    )
+    prescribed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='prescriptions'
+    )
+    medication = models.CharField(max_length=MEDICATION_MAX_LENGTH)
+    dosage = models.CharField(max_length=DOSAGE_MAX_LENGTH)
+    instructions = models.TextField(blank=True)
+    date_prescribed = models.DateField(
+        default=timezone.localdate, validators=[validate_date_not_in_future]
+    )
+
+    class Meta:
+        ordering = ('-date_prescribed',)
+
+    def __str__(self):
+        return f"{self.medication} ({self.dosage})"
+
+
+class TreatmentRecord(models.Model):
+    TOOTH_MAX_LENGTH = 10
+
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name='treatment_records'
+    )
+    treatment = models.ForeignKey(
+        Treatment, on_delete=models.PROTECT, related_name='treatment_records'
+    )
+    appointment = models.ForeignKey(
+        'appointment.Appointment', on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='treatment_records'
+    )
+    performed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='treatment_records'
+    )
+    date_performed = models.DateField(
+        null=True, blank=True, validators=[validate_date_not_in_future]
+    )
+    tooth = models.CharField(max_length=TOOTH_MAX_LENGTH, blank=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ('-date_performed',)
+
+    def __str__(self):
+        return f"{self.treatment} on {self.patient} ({self.date_performed or 'unknown'})"

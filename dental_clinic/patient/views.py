@@ -4,8 +4,11 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from dental_clinic.treatment.models import Treatment
-from .models import Patient, MedicalCondition, Allergy, MedicalHistoryEntry
-from .forms import AddTreatmentForm, PatientForm, MedicalConditionForm, AllergyForm, MedicalHistoryEntryForm
+from dental_clinic.appointment.models import Appointment
+from .models import Patient, MedicalCondition, Allergy, MedicalHistoryEntry, \
+    ClinicalNote, Prescription, TreatmentRecord
+from .forms import AddTreatmentForm, PatientForm, MedicalConditionForm, AllergyForm, MedicalHistoryEntryForm, \
+    ClinicalNoteForm, PrescriptionForm, TreatmentRecordForm
 
 
 class PatientListView(LoginRequiredMixin, views.ListView):
@@ -72,6 +75,9 @@ class PatientMedicalRecordView(LoginRequiredMixin, views.DetailView):
         context['medical_conditions'] = self.object.medical_conditions.all()
         context['allergies'] = self.object.allergies.all()
         context['medical_history_entries'] = self.object.medical_history_entries.all()
+        context['clinical_notes'] = self.object.clinical_notes.all()
+        context['prescriptions'] = self.object.prescriptions.all()
+        context['treatment_records'] = self.object.treatment_records.all()
         return context
 
 
@@ -160,6 +166,115 @@ class MedicalHistoryEntryUpdateView(LoginRequiredMixin, views.UpdateView):
 class MedicalHistoryEntryDeleteView(LoginRequiredMixin, views.DeleteView):
     template_name = 'dental_clinic/patient/delete-history-entry.html'
     model = MedicalHistoryEntry
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})
+
+
+class ClinicalNoteCreateView(LoginRequiredMixin, views.CreateView):
+    template_name = 'dental_clinic/patient/add-note.html'
+    model = ClinicalNote
+    form_class = ClinicalNoteForm
+
+    def form_valid(self, form):
+        form.instance.patient = get_object_or_404(Patient, pk=self.kwargs['patient_pk'])
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.kwargs['patient_pk']})
+
+
+class ClinicalNoteUpdateView(LoginRequiredMixin, views.UpdateView):
+    template_name = 'dental_clinic/patient/edit-note.html'
+    model = ClinicalNote
+    form_class = ClinicalNoteForm
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})
+
+
+class ClinicalNoteDeleteView(LoginRequiredMixin, views.DeleteView):
+    template_name = 'dental_clinic/patient/delete-note.html'
+    model = ClinicalNote
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})
+
+
+class PrescriptionCreateView(LoginRequiredMixin, views.CreateView):
+    template_name = 'dental_clinic/patient/add-prescription.html'
+    model = Prescription
+    form_class = PrescriptionForm
+
+    def form_valid(self, form):
+        form.instance.patient = get_object_or_404(Patient, pk=self.kwargs['patient_pk'])
+        form.instance.prescribed_by = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.kwargs['patient_pk']})
+
+
+class PrescriptionUpdateView(LoginRequiredMixin, views.UpdateView):
+    template_name = 'dental_clinic/patient/edit-prescription.html'
+    model = Prescription
+    form_class = PrescriptionForm
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})
+
+
+class PrescriptionDeleteView(LoginRequiredMixin, views.DeleteView):
+    template_name = 'dental_clinic/patient/delete-prescription.html'
+    model = Prescription
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})
+
+
+class TreatmentRecordCreateView(LoginRequiredMixin, views.CreateView):
+    template_name = 'dental_clinic/patient/add-treatment-record.html'
+    model = TreatmentRecord
+    form_class = TreatmentRecordForm
+
+    def form_valid(self, form):
+        form.instance.patient = get_object_or_404(Patient, pk=self.kwargs['patient_pk'])
+        form.instance.performed_by = self.request.user
+        return super().form_valid(form)
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields['treatment'].queryset = Treatment.objects.all()
+        form.fields['appointment'].queryset = Appointment.objects.filter(
+            patient_id=self.kwargs['patient_pk']
+        )
+        return form
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.kwargs['patient_pk']})
+
+
+class TreatmentRecordUpdateView(LoginRequiredMixin, views.UpdateView):
+    template_name = 'dental_clinic/patient/edit-treatment-record.html'
+    model = TreatmentRecord
+    form_class = TreatmentRecordForm
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields['treatment'].queryset = Treatment.objects.all()
+        form.fields['appointment'].queryset = Appointment.objects.filter(
+            patient_id=self.object.patient_id
+        )
+        return form
+
+    def get_success_url(self):
+        return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})
+
+
+class TreatmentRecordDeleteView(LoginRequiredMixin, views.DeleteView):
+    template_name = 'dental_clinic/patient/delete-treatment-record.html'
+    model = TreatmentRecord
 
     def get_success_url(self):
         return reverse_lazy('patient-medical-record', kwargs={'pk': self.object.patient_id})

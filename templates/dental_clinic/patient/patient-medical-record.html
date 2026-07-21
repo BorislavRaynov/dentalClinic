@@ -21,7 +21,7 @@
         </div>
 
         <div class="info-section">
-            <h2>Medical Conditions</h2>
+            <h2>Conditions &amp; Diagnoses</h2>
 
             {% if not medical_conditions %}
                 <p class="description">No medical conditions recorded.</p>
@@ -30,7 +30,9 @@
                     {% for condition in medical_conditions %}
                         <li>
                             <p class="description">
-                                {{ condition.name }} &mdash; {{ condition.get_status_display }}
+                                {{ condition.name }}
+                                {% if condition.code %}({{ condition.code }}){% endif %}
+                                &mdash; {{ condition.get_status_display }}
                                 {% if condition.diagnosed_date %}(diagnosed {{ condition.diagnosed_date }}){% endif %}
                             </p>
                             {% if condition.notes %}
@@ -107,6 +109,104 @@
 
             <div class="buttons">
                 <a href="{% url 'history-add' object.pk %}" class="edit-button">Add entry</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Clinical Notes</h2>
+
+            {% if not clinical_notes %}
+                <p class="description">No clinical notes recorded.</p>
+            {% else %}
+                <ul>
+                    {% for note in clinical_notes %}
+                        <li>
+                            <p class="description">
+                                {{ note.created_at }}
+                                {% if note.author %}&mdash; {{ note.author }}{% endif %}
+                            </p>
+                            <p class="description">{{ note.body }}</p>
+                            <div class="buttons">
+                                <a href="{% url 'note-edit' note.pk %}" class="edit-button"
+                                   aria-label="Edit note from {{ note.created_at }}">Edit</a>
+                                <a href="{% url 'note-delete' note.pk %}" class="delete-button"
+                                   aria-label="Delete note from {{ note.created_at }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{% url 'note-add' object.pk %}" class="edit-button">Add note</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Prescriptions</h2>
+
+            {% if not prescriptions %}
+                <p class="description">No prescriptions recorded.</p>
+            {% else %}
+                <ul>
+                    {% for prescription in prescriptions %}
+                        <li>
+                            <p class="description">
+                                {{ prescription.medication }} &mdash; {{ prescription.dosage }}
+                                ({{ prescription.date_prescribed }})
+                            </p>
+                            {% if prescription.instructions %}
+                                <p class="description">{{ prescription.instructions }}</p>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{% url 'prescription-edit' prescription.pk %}" class="edit-button"
+                                   aria-label="Edit prescription {{ prescription.medication }}">Edit</a>
+                                <a href="{% url 'prescription-delete' prescription.pk %}" class="delete-button"
+                                   aria-label="Delete prescription {{ prescription.medication }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{% url 'prescription-add' object.pk %}" class="edit-button">Add prescription</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Treatment History</h2>
+
+            {% if not treatment_records %}
+                <p class="description">No treatment records recorded.</p>
+            {% else %}
+                <ul>
+                    {% for record in treatment_records %}
+                        <li>
+                            <p class="description">
+                                {{ record.treatment }}
+                                {% if record.date_performed %}&mdash; {{ record.date_performed }}{% endif %}
+                                {% if record.tooth %}(tooth {{ record.tooth }}){% endif %}
+                            </p>
+                            {% if record.appointment %}
+                                <p class="description">Appointment: {{ record.appointment }}</p>
+                            {% endif %}
+                            {% if record.notes %}
+                                <p class="description">{{ record.notes }}</p>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{% url 'treatment-record-edit' record.pk %}" class="edit-button"
+                                   aria-label="Edit treatment record {{ record.treatment }}">Edit</a>
+                                <a href="{% url 'treatment-record-delete' record.pk %}" class="delete-button"
+                                   aria-label="Delete treatment record {{ record.treatment }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{% url 'treatment-record-add' object.pk %}" class="edit-button">Add treatment record</a>
             </div>
         </div>
 
