@@ -3,7 +3,10 @@ from .views import PatientCreateView, PatientEditView, PatientAddTreatment, Pati
     PatientMedicalRecordView, \
     MedicalConditionCreateView, MedicalConditionUpdateView, MedicalConditionDeleteView, \
     AllergyCreateView, AllergyUpdateView, AllergyDeleteView, \
-    MedicalHistoryEntryCreateView, MedicalHistoryEntryUpdateView, MedicalHistoryEntryDeleteView
+    MedicalHistoryEntryCreateView, MedicalHistoryEntryUpdateView, MedicalHistoryEntryDeleteView, \
+    ClinicalNoteCreateView, ClinicalNoteUpdateView, ClinicalNoteDeleteView, \
+    PrescriptionCreateView, PrescriptionUpdateView, PrescriptionDeleteView, \
+    TreatmentRecordCreateView, TreatmentRecordUpdateView, TreatmentRecordDeleteView
 
 
 urlpatterns = [
@@ -24,4 +27,16 @@ urlpatterns = [
     path('<int:patient_pk>/history/add/', MedicalHistoryEntryCreateView.as_view(), name='history-add'),
     path('history/<int:pk>/edit/', MedicalHistoryEntryUpdateView.as_view(), name='history-edit'),
     path('history/<int:pk>/delete/', MedicalHistoryEntryDeleteView.as_view(), name='history-delete'),
+
+    path('<int:patient_pk>/notes/add/', ClinicalNoteCreateView.as_view(), name='note-add'),
+    path('notes/<int:pk>/edit/', ClinicalNoteUpdateView.as_view(), name='note-edit'),
+    path('notes/<int:pk>/delete/', ClinicalNoteDeleteView.as_view(), name='note-delete'),
+
+    path('<int:patient_pk>/prescriptions/add/', PrescriptionCreateView.as_view(), name='prescription-add'),
+    path('prescriptions/<int:pk>/edit/', PrescriptionUpdateView.as_view(), name='prescription-edit'),
+    path('prescriptions/<int:pk>/delete/', PrescriptionDeleteView.as_view(), name='prescription-delete'),
+
+    path('<int:patient_pk>/treatment-records/add/', TreatmentRecordCreateView.as_view(), name='treatment-record-add'),
+    path('treatment-records/<int:pk>/edit/', TreatmentRecordUpdateView.as_view(), name='treatment-record-edit'),
+    path('treatment-records/<int:pk>/delete/', TreatmentRecordDeleteView.as_view(), name='treatment-record-delete'),
 ]
