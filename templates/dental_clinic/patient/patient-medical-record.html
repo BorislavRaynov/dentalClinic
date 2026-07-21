@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <section id="patient-medical-record">
+        <h1>Medical Record</h1>
+
+        <div class="info-section">
+            <div class="appointment-header">
+                <img class="patient-img" src="{% static 'images/patient-default.png' %}" alt="Patient picture">
+                <h1>{{ object.first_name }} {{ object.last_name }}</h1>
+                <p class="description">Patient ID: {{ object.patient_id }}</p>
+                <p class="description">Phone Number: {{ object.phone_number }}</p>
+                <p class="description">Email: {{ object.email }}</p>
+
+                <div class="buttons">
+                    <a href="{% url 'edit-patient' object.pk %}" class="edit-button">Edit patient</a>
+                    <a href="{% url 'patients-catalogue' %}" class="edit-button">Back to catalogue</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Medical Conditions</h2>
+
+            {% if not medical_conditions %}
+                <p class="description">No medical conditions recorded.</p>
+            {% else %}
+                <ul>
+                    {% for condition in medical_conditions %}
+                        <li>
+                            <p class="description">
+                                {{ condition.name }} &mdash; {{ condition.get_status_display }}
+                                {% if condition.diagnosed_date %}(diagnosed {{ condition.diagnosed_date }}){% endif %}
+                            </p>
+                            {% if condition.notes %}
+                                <p class="description">{{ condition.notes }}</p>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{% url 'condition-edit' condition.pk %}" class="edit-button"
+                                   aria-label="Edit condition {{ condition.name }}">Edit</a>
+                                <a href="{% url 'condition-delete' condition.pk %}" class="delete-button"
+                                   aria-label="Delete condition {{ condition.name }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{% url 'condition-add' object.pk %}" class="edit-button">Add condition</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Allergies</h2>
+
+            {% if not allergies %}
+                <p class="description">No allergies recorded.</p>
+            {% else %}
+                <ul>
+                    {% for allergy in allergies %}
+                        <li>
+                            <p class="description">
+                                {{ allergy.name }} &mdash; {{ allergy.get_severity_display }}
+                            </p>
+                            {% if allergy.reaction %}
+                                <p class="description">Reaction: {{ allergy.reaction }}</p>
+                            {% endif %}
+                            <div class="buttons">
+                                <a href="{% url 'allergy-edit' allergy.pk %}" class="edit-button"
+                                   aria-label="Edit allergy {{ allergy.name }}">Edit</a>
+                                <a href="{% url 'allergy-delete' allergy.pk %}" class="delete-button"
+                                   aria-label="Delete allergy {{ allergy.name }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{% url 'allergy-add' object.pk %}" class="edit-button">Add allergy</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Medical History</h2>
+
+            {% if not medical_history_entries %}
+                <p class="description">No medical history entries recorded.</p>
+            {% else %}
+                <ul>
+                    {% for entry in medical_history_entries %}
+                        <li>
+                            <p class="description">{{ entry.entry_date }}</p>
+                            <p class="description">{{ entry.note }}</p>
+                            <div class="buttons">
+                                <a href="{% url 'history-edit' entry.pk %}" class="edit-button"
+                                   aria-label="Edit medical history entry from {{ entry.entry_date }}">Edit</a>
+                                <a href="{% url 'history-delete' entry.pk %}" class="delete-button"
+                                   aria-label="Delete medical history entry from {{ entry.entry_date }}">Delete</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="{% url 'history-add' object.pk %}" class="edit-button">Add entry</a>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
