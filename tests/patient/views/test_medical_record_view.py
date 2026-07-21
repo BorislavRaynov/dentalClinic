@@ -2,8 +2,17 @@ from django.test import TestCase
 from django.urls import reverse
 
 from dental_clinic.auth_app.models import DentistUser
-from dental_clinic.patient.models import Allergy, MedicalCondition, MedicalHistoryEntry, Patient
+from dental_clinic.patient.models import (
+    Allergy,
+    ClinicalNote,
+    MedicalCondition,
+    MedicalHistoryEntry,
+    Patient,
+    Prescription,
+    TreatmentRecord,
+)
 from dental_clinic.patient.views import PatientMedicalRecordView
+from dental_clinic.treatment.models import Treatment
 
 
 class PatientMedicalRecordViewTestCase(TestCase):
@@ -56,6 +65,22 @@ class PatientMedicalRecordViewTestCase(TestCase):
         history = MedicalHistoryEntry.objects.create(patient=self.patient, note="Checkup")
         MedicalHistoryEntry.objects.create(patient=self.other_patient, note="Surgery")
 
+        note = ClinicalNote.objects.create(patient=self.patient, body="Note body")
+        ClinicalNote.objects.create(patient=self.other_patient, body="Other note body")
+
+        prescription = Prescription.objects.create(
+            patient=self.patient, medication="Amoxicillin", dosage="500mg"
+        )
+        Prescription.objects.create(
+            patient=self.other_patient, medication="Ibuprofen", dosage="200mg"
+        )
+
+        treatment = Treatment.objects.create(
+            clinical_code="123", name="Filling", cost=100.0, description="Composite filling"
+        )
+        treatment_record = TreatmentRecord.objects.create(patient=self.patient, treatment=treatment)
+        TreatmentRecord.objects.create(patient=self.other_patient, treatment=treatment)
+
         view = PatientMedicalRecordView()
         view.object = self.patient
         context = view.get_context_data()
@@ -63,3 +88,6 @@ class PatientMedicalRecordViewTestCase(TestCase):
         self.assertEqual(list(context['medical_conditions']), [condition])
         self.assertEqual(list(context['allergies']), [allergy])
         self.assertEqual(list(context['medical_history_entries']), [history])
+        self.assertEqual(list(context['clinical_notes']), [note])
+        self.assertEqual(list(context['prescriptions']), [prescription])
+        self.assertEqual(list(context['treatment_records']), [treatment_record])

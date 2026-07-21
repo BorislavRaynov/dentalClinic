@@ -63,3 +63,18 @@ class MedicalConditionModelTestCase(TestCase):
         self.patient.delete()
 
         self.assertEqual(MedicalCondition.objects.count(), 0)
+
+    def test_medical_condition_code_defaults_to_blank(self):
+        condition = MedicalCondition.objects.create(patient=self.patient, name="Diabetes")
+        condition.full_clean()
+
+        self.assertEqual(condition.code, '')
+
+    def test_medical_condition_code_persists_when_set(self):
+        condition = MedicalCondition.objects.create(
+            patient=self.patient, name="Diabetes", code="E11.9"
+        )
+        condition.full_clean()
+        condition.refresh_from_db()
+
+        self.assertEqual(condition.code, "E11.9")
